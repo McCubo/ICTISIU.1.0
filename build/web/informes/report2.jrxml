@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2d8740a5-85c4-4876-9c0f-97a13915ee70">
+	<property name="template.type" value="columnar"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="14"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="dataset1" uuid="0b15fb7c-fea6-4a0c-b812-036ea5e79545">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="nombre" class="java.lang.String">
+			<fieldDescription><![CDATA[nombre]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataset2" uuid="cf01e2f9-8701-4584-b87c-b050d0ccc593"/>
+	<parameter name="investigador" class="java.util.List">
+		<defaultValueExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{investigador})]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="estado" class="java.lang.String">
+		<fieldDescription><![CDATA[estado]]></fieldDescription>
+	</field>
+	<field name="idinstitucion" class="sv.edu.ufg.icti.siu.entidades.Institucion">
+		<fieldDescription><![CDATA[idinstitucion]]></fieldDescription>
+	</field>
+	<field name="puntos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[puntos]]></fieldDescription>
+	</field>
+	<field name="idmedicion" class="sv.edu.ufg.icti.siu.entidades.Medicion">
+		<fieldDescription><![CDATA[idmedicion]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.util.Date">
+		<fieldDescription><![CDATA[fecha]]></fieldDescription>
+	</field>
+	<field name="idinvestigador" class="sv.edu.ufg.icti.siu.entidades.Investigador">
+		<fieldDescription><![CDATA[idinvestigador]]></fieldDescription>
+	</field>
+	<group name="investigadores_nia">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="28">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="28" forecolor="#B89F7D" backcolor="#9DB1B8" uuid="73a80c13-2c64-4e87-a82a-33d374100383"/>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="2" y="1" width="98" height="23" forecolor="#FFFFFF" uuid="e46a3e5a-968e-4e4a-8c05-eca2d834ecb6"/>
+						<textElement>
+							<font size="14" isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{idinvestigador}.getNia()]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="37"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="154" y="35" width="239" height="27" uuid="1a5c6b9a-d3f1-48d7-9a3b-5dc05cf439c8"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte Investigador]]></text>
+			</staticText>
+			<image>
+				<reportElement x="414" y="10" width="139" height="52" uuid="8b6479f2-7043-4013-ac16-47f3177f4a98"/>
+				<imageExpression><![CDATA["C:\\Users\\marc\\Documents\\NetBeansProjects\\ICTISIUbeta\\web\\informes\\ICTI03.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="358" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="2" y="315" width="551" height="1" uuid="bfa40454-a5cc-439b-9cde-e7b9fe249071"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="41" width="100" height="20" uuid="d4ea0cce-8af8-42d5-b17f-767b9cd4e33c"/>
+				<textFieldExpression><![CDATA[$F{idinvestigador}.getNombres()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="288" y="39" width="139" height="20" uuid="34275802-4250-4965-bcb8-77ef5ffdf9ba"/>
+				<textFieldExpression><![CDATA[$F{idinvestigador}.getApellidos()]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="19" width="555" height="20" backcolor="#9999FF" uuid="2a042d40-9d39-48c9-a6bc-91ab4c853a3a"/>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="ab8fc907-4cc5-4258-93af-a638fcd5c914"/>
+					<text><![CDATA[Nombres]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="287" y="0" width="100" height="20" uuid="241bddac-592c-45a1-88f7-0538ac5246eb"/>
+					<text><![CDATA[Apellidos]]></text>
+				</staticText>
+			</frame>
+			<textField>
+				<reportElement x="2" y="83" width="282" height="20" uuid="f23b543b-e4b7-4dd8-b4c0-8437cd51fe50"/>
+				<textFieldExpression><![CDATA[$F{idinvestigador}.getEspecialidad()]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="62" width="555" height="20" backcolor="#9999FF" uuid="35795513-cc33-4596-b858-57678d038db2"/>
+				<staticText>
+					<reportElement x="2" y="0" width="100" height="20" uuid="bf0da8bd-26dd-4de3-9ca2-8b950ce8b5fd"/>
+					<text><![CDATA[Especialidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="289" y="0" width="100" height="20" uuid="9d81222c-0a1d-466a-bd2f-32aac1056916"/>
+					<text><![CDATA[Telefono]]></text>
+				</staticText>
+			</frame>
+			<textField>
+				<reportElement x="290" y="82" width="100" height="20" uuid="41fb2024-125b-4938-8bed-01b242677644"/>
+				<textFieldExpression><![CDATA[$F{idinvestigador}.getTelefono()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="284" y="19" width="1" height="82" uuid="a9ace459-51f8-47af-bdc9-604f224f0559"/>
+			</line>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="147" width="555" height="20" backcolor="#9999FF" uuid="003be0a8-cc88-4d32-8d28-50a4d8f80ff0"/>
+			</frame>
+			<staticText>
+				<reportElement x="2" y="149" width="100" height="20" uuid="96201a82-dba3-4f6a-8182-42ab84ef507b"/>
+				<text><![CDATA[Grado Academico]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="0" y="168" width="104" height="22" uuid="4f7d4bc2-f354-431f-abb6-e867b33f512a"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Horizontal" ignoreWidth="true">
+					<datasetRun subDataset="dataset1" uuid="a851ffd0-5d53-4c1e-9797-578d5c330963">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{idinvestigador}.getGradoacademicoList())]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="22" width="104">
+						<textField>
+							<reportElement x="2" y="1" width="100" height="20" uuid="768fc970-5aeb-400f-bbd5-881c1386088a"/>
+							<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField>
+				<reportElement x="237" y="191" width="187" height="20" uuid="f445a22d-70be-46d8-b3a6-8572a7924005"/>
+				<textFieldExpression><![CDATA[""+$F{idinvestigador}.getIdtipocontra().getNombre()]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement mode="Opaque" x="1" y="191" width="231" height="20" backcolor="#9999FF" uuid="a6d0a593-6eba-4f8d-8b3b-8ff8c96092e1"/>
+			</frame>
+			<staticText>
+				<reportElement x="1" y="194" width="100" height="20" uuid="e0a2843a-4c9c-460b-9c63-8943cfe9ddb7"/>
+				<text><![CDATA[Tipo Contratacion]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="1" y="214" width="554" height="20" backcolor="#9999FF" uuid="13d11f98-4e0c-4750-b563-085e13affe8b"/>
+				<staticText>
+					<reportElement x="232" y="0" width="100" height="20" uuid="73bd537e-5b7e-45d6-b974-55fab7aed124"/>
+					<text><![CDATA[Puntaje Inicial]]></text>
+				</staticText>
+			</frame>
+			<textField>
+				<reportElement x="4" y="235" width="111" height="20" uuid="fd6de753-ebfb-426e-8e5f-4558de9ac30a"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{idinvestigador}.getFechaIngreso())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="215" width="100" height="20" uuid="8d8552bd-9650-4bee-b2fd-4652f68f95d2"/>
+				<text><![CDATA[Fecha Ingreso]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="233" y="237" width="100" height="20" uuid="26b1c983-a20f-4bc3-8682-3d1fb8478ce7"/>
+				<textFieldExpression><![CDATA[$F{idinvestigador}.getPuntajeInicial()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="125" width="271" height="20" uuid="29f324f6-9eb2-4b06-b26c-f06bd5218827"/>
+				<textFieldExpression><![CDATA[$F{idinvestigador}.getEmail()]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement mode="Opaque" x="2" y="104" width="553" height="20" backcolor="#9999FF" uuid="ed55dcd6-a3e5-4531-bd78-0f32810c8bdb"/>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="e45dc5c8-47e5-41ba-9837-98c04760501e"/>
+					<text><![CDATA[Correo Electronico]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="1" y="257" width="552" height="20" backcolor="#9999FF" uuid="d855985c-b08c-46f9-9d0d-1657ec0e2b2a"/>
+			</frame>
+			<textField>
+				<reportElement x="4" y="280" width="154" height="20" uuid="a938059e-7dc0-4e4a-9461-4f7f2a5386dd"/>
+				<textFieldExpression><![CDATA[$F{idinvestigador}.getNombreJefeInmediato()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="258" width="100" height="20" uuid="205e04bb-436c-4021-94bf-c6e8799d9b94"/>
+				<text><![CDATA[Jefe Inmediato]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="a7aa0d1d-3b39-4513-8b68-c7ccae7f8fa2"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8" uuid="5235d4ed-6bbd-4cd5-a7bb-292df79f6867"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="13" forecolor="#FFFFFF" uuid="b47047db-464f-4ef2-a4fe-6cc712bfa094"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="0" width="80" height="13" forecolor="#FFFFFF" uuid="fa63aa6b-0425-4217-a6f6-dad328d73e00"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" uuid="b9ede9cf-e297-42ac-b888-30086fb4a62c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

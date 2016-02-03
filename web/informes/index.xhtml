@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template2.xhtml"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:define name="title">
+        <h:outputText value="#{myBundle.InvestigadorTitle}"/>
+    </ui:define>
+
+    <ui:define name="body">
+       <!--  <h:form id="busqueda" > 
+        <h:panelGroup id="display">
+                    <p:panelGrid columns="4" columnClasses="column">
+
+                        <p:outputLabel value="Estado" for="estado" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="estado" value="#{busquedaPersonalizada.estado}">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItem itemLabel="Activo" itemValue="Activo" />
+                            <f:selectItem itemLabel="Inactivo" itemValue="Inactivo" />
+                            
+                        </p:selectOneMenu>
+                            
+                        </h:panelGroup>-->
+
+                     <!--    <p:outputLabel value="Tipo Investigador" for="tipoInvestigador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipoInvestigador" value="#{busquedaPersonalizada.tipo}">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItem itemLabel="Asociado" itemValue="Asociado" />
+                            <f:selectItem itemLabel="Docentes Investigadores" itemValue="Docentes Investigadores" />
+                            <f:selectItem itemLabel="Fijo" itemValue="Fijo" />
+                       
+                        </p:selectOneMenu>
+                        </h:panelGroup>
+                        -->
+                        <!--
+                        <p:outputLabel value="Año Ingreso" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:inputText size="4" maxlength="4" id="fechaIngreso"  value="#{busquedaPersonalizada.ano}" />
+                            
+                        </h:panelGroup> -->
+                        <!-- <p:outputLabel value="Tipo Contratacion" for="tipoC" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipoC" value="#{busquedaPersonalizada.tipoC}">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItem itemLabel="TC" itemValue="1" />
+                            <f:selectItem itemLabel="TP" itemValue="2" />
+                            <f:selectItem itemLabel="HC" itemValue="3" />
+                            <f:selectItem itemLabel="Otros" itemValue="4" />
+                       
+                        </p:selectOneMenu>
+                        </h:panelGroup>-->
+                        
+               <!--      </p:panelGrid>
+        </h:panelGroup>
+            <p:commandButton id="buscar" value="buscar">
+                
+            </p:commandButton>
+        </h:form>
+        -->
+        <h:form id="informeIn">
+            
+            
+            
+            <p:contextMenu id="InvestigadorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('informeIn:viewButton').click();" icon="ui-icon-search"/>
+                
+                
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{investigadorController.items}"
+                         var="item"
+                         rowStyleClass="#{item.estado}"
+                         rowKey="#{item.idinvestigador}"
+                         selectionMode="single" scrollable="true" resizableColumns="true" resizeMode="expand" scrollWidth="97.7%"
+                         selection="#{investigadorController.selected}">
+                 <f:facet name="header">
+                    
+            <h:commandLink>
+                <p:graphicImage value="/imagenes/pdf.png" width="24"/>
+                <pe:exporter type="pdf" target="datalist" fileName="investigadores" preProcessor="#{investigadorController.preProcessPDF}" facetBackground="#547BF9"  
+                             datasetPadding="4" encoding="iso-8859-1" skipComponents="org.primefaces.component.columntoggler.ColumnToggler"/>
+            </h:commandLink>
+ 
+            <p:commandButton id="toggler" type="button" value="Investigadores" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="datalist" trigger="toggler" />
+        </f:facet>
+
+                <p:ajax event="rowSelect"   update=":informeIn:viewButton :informeIn:InvestigadorDataTableContextMenu" listener="#{investigadorController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":informeIn:viewButton :informeIn:InvestigadorDataTableContextMenu" listener="#{investigadorController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('informeIn:viewButton').click();"/>
+
+               
+
+
+              <p:column width="100" sortBy="#{item.nia}" filterBy="#{item.nia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInvestigadorTitle_nia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nia}"/>
+                </p:column>
+
+
+               <p:column width="120" filterMatchMode="contains" sortBy="#{item.nombres}" filterBy="#{item.nombres}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInvestigadorTitle_nombres}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombres}"/>
+                </p:column>
+
+
+                <p:column width="120" filterMatchMode="contains" sortBy="#{item.apellidos}" filterBy="#{item.apellidos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInvestigadorTitle_apellidos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellidos}"/>
+                </p:column>
+
+ <p:column width="200" sortBy="#{item.email}" filterBy="#{item.email}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListInvestigadorTitle_email}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.email}"/>
+                                    </p:column>
+               
+
+
+                <p:column width="100">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInvestigadorTitle_telefono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefono}"/>
+                </p:column>
+                
+                <p:column width="100" sortBy="#{item.estado}" filterBy="#{item.estado}">
+                    
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListInvestigadorTitle_estado}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.estado}"/>
+                                    </p:column>
+
+                <p:column width="110" sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListInvestigadorTitle_fechaIngreso}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaIngreso}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                                    
+                
+                
+                                    <p:column width="250" sortBy="#{item.unidadAcademica}" filterBy="#{item.unidadAcademica}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListInvestigadorTitle_unidadAcademica}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.unidadAcademica}"/>
+                                    </p:column>
+                
+                 
+                <!--
+                                    <p:column sortBy="#{item.nombreJefeInmediato}" filterBy="#{item.nombreJefeInmediato}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListInvestigadorTitle_nombreJefeInmediato}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nombreJefeInmediato}"/>
+                                    </p:column>
+                -->
+                <!--
+                                   
+                -->
+                
+                                    <p:column width="100" sortBy="#{item.puntajeInicial}" filterBy="#{item.puntajeInicial}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListInvestigadorTitle_puntajeInicial}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.puntajeInicial}"/>
+                                    </p:column>
+                
+                
+                 <p:column width="250" sortBy="#{item.especialidad}" filterBy="#{item.especialidad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInvestigadorTitle_especialidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.especialidad}"/>
+                </p:column>
+                                    
+                
+                
+                                    <p:column width="200" sortBy="#{item.tipoInvestigador}" filterBy="#{item.tipoInvestigador}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListInvestigadorTitle_tipoInvestigador}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tipoInvestigador}"/>
+                                    </p:column>
+                
+                
+                                    <p:column width="100" sortBy="#{item.ingreso}" filterBy="#{item.ingreso}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListInvestigadorTitle_ingreso}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ingreso}"/>
+                                    </p:column>
+                
+                
+                                    <p:column width="100" sortBy="#{item.idtipocontra.nombre}" filterBy="#{item.idtipocontra.nombre}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListInvestigadorTitle_idtipocontra}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idtipocontra.nombre}"/>
+                                    </p:column>
+               
+                
+            </p:dataTable>                
+                
+
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":InvestigadorViewForm" oncomplete="PF('InvestigadorViewDialog').show()" disabled="#{empty investigadorController.selected}"/>
+        </h:form>
+        
+<ui:include src="/investigador/View.xhtml"/>
+    </ui:define>
+
+</ui:composition>

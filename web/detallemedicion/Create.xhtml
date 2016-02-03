@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetallemedicionCreateDlg" widgetVar="DetallemedicionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateDetallemedicionTitle}" closeOnEscape="true">
+
+            <h:form id="DetallemedicionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{detallemedicionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateDetallemedicionLabel_isbn}" for="isbn" />
+                        <h:panelGroup>
+                            <p:inputText id="isbn" value="#{detallemedicionController.selected.isbn}" title="#{myBundle.CreateDetallemedicionTitle_isbn}" size="15" maxlength="15"/>
+                            <p:tooltip for="isbn" value="#{detallemedicionController.getComponentMessages('isbn', myBundle.CreateDetallemedicionHelpText_isbn)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateDetallemedicionLabel_detalles}" for="detalles" />
+                        <h:panelGroup>
+                            <p:inputText id="detalles" value="#{detallemedicionController.selected.detalles}" title="#{myBundle.CreateDetallemedicionTitle_detalles}" size="100" maxlength="100"/>
+                            <p:tooltip for="detalles" value="#{detallemedicionController.getComponentMessages('detalles', myBundle.CreateDetallemedicionHelpText_detalles)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateDetallemedicionLabel_idmedicion}" for="idmedicion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idmedicion" value="#{detallemedicionController.selected.idmedicion}" required="true" requiredMessage="#{myBundle.CreateDetallemedicionRequiredMessage_idmedicion}" converter="medicionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{medicionController.items}"
+                                               var="idmedicionItem"
+                                               itemValue="#{idmedicionItem}"
+                                               itemLabel="#{idmedicionItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idmedicion" value="#{detallemedicionController.getComponentMessages('idmedicion', myBundle.CreateDetallemedicionHelpText_idmedicion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detallemedicionController.saveNew}" value="#{myBundle.Save}" update="display,:DetallemedicionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DetallemedicionCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('DetallemedicionCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

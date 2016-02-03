@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      >
+	<head>
+            
+		<title>Login</title>
+	</head>
+	<h:body>
+		<h:form id="j_security_check">
+			<center>
+				<h:messages errorClass="errorMessage" infoClass="infoMessage"
+							warnClass="warnMessage"></h:messages>
+                            <h:panelGrid columns="2" title="Login">
+                                    
+					<h:outputText value="Usuario : "/>
+                                        <h:inputText id="j_username" value="#{loginBean.username}" required="true" requiredMessage="Debe ingresar usuario"/>
+
+					<h:outputText value="Password : "/>
+					<h:inputSecret id="j_password" value="#{loginBean.password}" required="true" requiredMessage="Debe ingresar password"/>
+
+					<h:commandButton value="Ingresar" action="#{loginBean.login}"
+									 type="submit"/>
+				</h:panelGrid>
+			</center>
+		</h:form>
+	</h:body>
+</html>

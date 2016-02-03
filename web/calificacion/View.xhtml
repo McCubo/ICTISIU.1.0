@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CalificacionViewDlg" widgetVar="CalificacionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCalificacionTitle}" closeOnEscape="true">
+
+            <h:form id="CalificacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{calificacionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCalificacionLabel_idcal}"/>
+                        <h:outputText value="#{calificacionController.selected.idcal}" title="#{myBundle.ViewCalificacionTitle_idcal}"/>
+
+                        <h:outputText value="#{myBundle.ViewCalificacionLabel_nombre}"/>
+                        <h:outputText value="#{calificacionController.selected.nombre}" title="#{myBundle.ViewCalificacionTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewCalificacionLabel_descripcion}"/>
+                        <h:outputText value="#{calificacionController.selected.descripcion}" title="#{myBundle.ViewCalificacionTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewCalificacionLabel_bono}"/>
+                        <h:outputText value="#{calificacionController.selected.bono}" title="#{myBundle.ViewCalificacionTitle_bono}"/>
+
+                        <h:outputText value="#{myBundle.ViewCalificacionLabel_puntajemin}"/>
+                        <h:outputText value="#{calificacionController.selected.puntajemin}" title="#{myBundle.ViewCalificacionTitle_puntajemin}"/>
+
+                        <h:outputText value="#{myBundle.ViewCalificacionLabel_puntajemax}"/>
+                        <h:outputText value="#{calificacionController.selected.puntajemax}" title="#{myBundle.ViewCalificacionTitle_puntajemax}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CalificacionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

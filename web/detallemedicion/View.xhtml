@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetallemedicionViewDlg" widgetVar="DetallemedicionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewDetallemedicionTitle}" closeOnEscape="true">
+
+            <h:form id="DetallemedicionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{detallemedicionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewDetallemedicionLabel_iddetallemed}"/>
+                        <h:outputText value="#{detallemedicionController.selected.iddetallemed}" title="#{myBundle.ViewDetallemedicionTitle_iddetallemed}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetallemedicionLabel_isbn}"/>
+                        <h:outputText value="#{detallemedicionController.selected.isbn}" title="#{myBundle.ViewDetallemedicionTitle_isbn}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetallemedicionLabel_detalles}"/>
+                        <h:outputText value="#{detallemedicionController.selected.detalles}" title="#{myBundle.ViewDetallemedicionTitle_detalles}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetallemedicionLabel_idmedicion}"/>
+                        <h:outputText value="#{detallemedicionController.selected.idmedicion.nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('DetallemedicionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

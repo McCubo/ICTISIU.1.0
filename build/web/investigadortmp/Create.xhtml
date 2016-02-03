@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InvestigadorCreateDlg" widgetVar="InvestigadorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateInvestigadorTitle}" closeOnEscape="true">
+
+            <h:form id="InvestigadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{investigadorController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_nia}" for="nia" />
+                        <h:panelGroup>
+                            <p:inputText id="nia" value="#{investigadorController.selected.nia}" title="#{myBundle.CreateInvestigadorTitle_nia}" required="true" requiredMessage="#{myBundle.CreateInvestigadorRequiredMessage_nia}" size="8" maxlength="8"/>
+                            <p:tooltip for="nia" value="#{investigadorController.getComponentMessages('nia', myBundle.CreateInvestigadorHelpText_nia)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_nombres}" for="nombres" />
+                        <h:panelGroup>
+                            <p:inputText id="nombres" value="#{investigadorController.selected.nombres}" title="#{myBundle.CreateInvestigadorTitle_nombres}" required="true" requiredMessage="#{myBundle.CreateInvestigadorRequiredMessage_nombres}" size="50" maxlength="50"/>
+                            <p:tooltip for="nombres" value="#{investigadorController.getComponentMessages('nombres', myBundle.CreateInvestigadorHelpText_nombres)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_apellidos}" for="apellidos" />
+                        <h:panelGroup>
+                            <p:inputText id="apellidos" value="#{investigadorController.selected.apellidos}" title="#{myBundle.CreateInvestigadorTitle_apellidos}" required="true" requiredMessage="#{myBundle.CreateInvestigadorRequiredMessage_apellidos}" size="50" maxlength="50"/>
+                            <p:tooltip for="apellidos" value="#{investigadorController.getComponentMessages('apellidos', myBundle.CreateInvestigadorHelpText_apellidos)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_especialidad}" for="especialidad" />
+                        <h:panelGroup>
+                            <p:inputText id="especialidad" value="#{investigadorController.selected.especialidad}" title="#{myBundle.CreateInvestigadorTitle_especialidad}" size="100" maxlength="100"/>
+                            <p:tooltip for="especialidad" value="#{investigadorController.getComponentMessages('especialidad', myBundle.CreateInvestigadorHelpText_especialidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_telefono}" for="telefono" />
+                        <h:panelGroup>
+                            <p:inputText id="telefono" value="#{investigadorController.selected.telefono}" title="#{myBundle.CreateInvestigadorTitle_telefono}" size="20" maxlength="20"/>
+                            <p:tooltip for="telefono" value="#{investigadorController.getComponentMessages('telefono', myBundle.CreateInvestigadorHelpText_telefono)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_email}" for="email" />
+                        <h:panelGroup>
+                            <p:inputText id="email" value="#{investigadorController.selected.email}" title="#{myBundle.CreateInvestigadorTitle_email}" size="100" maxlength="100"/>
+                            <p:tooltip for="email" value="#{investigadorController.getComponentMessages('email', myBundle.CreateInvestigadorHelpText_email)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_unidadAcademica}" for="unidadAcademica" />
+                        <h:panelGroup>
+                            <p:inputText id="unidadAcademica" value="#{investigadorController.selected.unidadAcademica}" title="#{myBundle.CreateInvestigadorTitle_unidadAcademica}" size="100" maxlength="100"/>
+                            <p:tooltip for="unidadAcademica" value="#{investigadorController.getComponentMessages('unidadAcademica', myBundle.CreateInvestigadorHelpText_unidadAcademica)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="Unidad Academica Siglas" for="UAsiglas" />
+                        <h:panelGroup>
+                            <p:inputText id="UAsiglas" value="#{investigadorController.selected.UAsiglas}" title="#{myBundle.CreateInvestigadorTitle_UAsiglas}" size="20" maxlength="20"/>
+                            <p:tooltip for="UAsiglas" value="#{investigadorController.getComponentMessages('UAsiglas', myBundle.CreateInvestigadorHelpText_UAsiglas)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_nombreJefeInmediato}" for="nombreJefeInmediato" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreJefeInmediato" value="#{investigadorController.selected.nombreJefeInmediato}" title="#{myBundle.CreateInvestigadorTitle_nombreJefeInmediato}" size="50" maxlength="50"/>
+                            <p:tooltip for="nombreJefeInmediato" value="#{investigadorController.getComponentMessages('nombreJefeInmediato', myBundle.CreateInvestigadorHelpText_nombreJefeInmediato)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_otrostipocontra}" for="otrostipocontra" />
+                        <h:panelGroup>
+                            <p:inputText id="otrostipocontra" value="#{investigadorController.selected.otrostipocontra}" title="#{myBundle.CreateInvestigadorTitle_otrostipocontra}" size="20" maxlength="20"/>
+                            <p:tooltip for="otrostipocontra" value="#{investigadorController.getComponentMessages('otrostipocontra', myBundle.CreateInvestigadorHelpText_otrostipocontra)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_fechaIngreso}" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{investigadorController.selected.fechaIngreso}" title="#{myBundle.CreateInvestigadorTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.CreateInvestigadorRequiredMessage_fechaIngreso}" showOn="button"/>
+                            <p:tooltip for="fechaIngreso" value="#{investigadorController.getComponentMessages('fechaIngreso', myBundle.CreateInvestigadorHelpText_fechaIngreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_puntajeInicial}" for="puntajeInicial" />
+                        <h:panelGroup>
+                            <p:inputText id="puntajeInicial" value="#{investigadorController.selected.puntajeInicial}" title="#{myBundle.CreateInvestigadorTitle_puntajeInicial}" required="true" requiredMessage="#{myBundle.CreateInvestigadorRequiredMessage_puntajeInicial}"/>
+                            <p:tooltip for="puntajeInicial" value="#{investigadorController.getComponentMessages('puntajeInicial', myBundle.CreateInvestigadorHelpText_puntajeInicial)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:inputText id="estado" value="#{investigadorController.selected.estado}" title="#{myBundle.CreateInvestigadorTitle_estado}" required="true" requiredMessage="#{myBundle.CreateInvestigadorRequiredMessage_estado}" size="22" maxlength="22"/>
+                            <p:tooltip for="estado" value="#{investigadorController.getComponentMessages('estado', myBundle.CreateInvestigadorHelpText_estado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_tipoInvestigador}" for="tipoInvestigador" />
+                        <h:panelGroup>
+                            <p:inputText id="tipoInvestigador" value="#{investigadorController.selected.tipoInvestigador}" title="#{myBundle.CreateInvestigadorTitle_tipoInvestigador}" size="50" maxlength="50"/>
+                            <p:tooltip for="tipoInvestigador" value="#{investigadorController.getComponentMessages('tipoInvestigador', myBundle.CreateInvestigadorHelpText_tipoInvestigador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_ingreso}" for="ingreso" />
+                        <h:panelGroup>
+                            <p:inputText id="ingreso" value="#{investigadorController.selected.ingreso}" title="#{myBundle.CreateInvestigadorTitle_ingreso}" required="true" requiredMessage="#{myBundle.CreateInvestigadorRequiredMessage_ingreso}" size="10" maxlength="10"/>
+                            <p:tooltip for="ingreso" value="#{investigadorController.getComponentMessages('ingreso', myBundle.CreateInvestigadorHelpText_ingreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_gradoacademicoList}" for="gradoacademicoList" />
+                        <h:panelGroup>
+                            <p:selectManyMenu id="gradoacademicoList" value="#{investigadorController.selected.gradoacademicoList}"  converter="gradoacademicoConverter">
+                                <f:selectItems value="#{gradoacademicoController.items}"
+                                               var="gradoacademicoListItem"
+                                               itemValue="#{gradoacademicoListItem}"
+                                               itemLabel="#{gradoacademicoListItem.nombre.toString()}"
+                                               />
+
+                            </p:selectManyMenu>
+                            <p:tooltip for="gradoacademicoList" value="#{investigadorController.getComponentMessages('gradoacademicoList', myBundle.CreateInvestigadorHelpText_gradoacademicoList)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInvestigadorLabel_idtipocontra}" for="idtipocontra" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idtipocontra" value="#{investigadorController.selected.idtipocontra}" required="true" requiredMessage="#{myBundle.CreateInvestigadorRequiredMessage_idtipocontra}" converter="tipocontratacionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{tipocontratacionController.items}"
+                                               var="idtipocontraItem"
+                                               itemValue="#{idtipocontraItem}"
+                                               itemLabel="#{idtipocontraItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idtipocontra" value="#{investigadorController.getComponentMessages('idtipocontra', myBundle.CreateInvestigadorHelpText_idtipocontra)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{investigadorController.saveNew}" value="#{myBundle.Save}" update="display,:InvestigadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InvestigadorCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('InvestigadorCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

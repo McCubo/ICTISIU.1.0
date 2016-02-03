@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="InstitucioncatEditDlg" widgetVar="InstitucioncatEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditInstitucioncatTitle}" closeOnEscape="true">
+
+            <h:form id="InstitucioncatEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{institucioncatController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditInstitucioncatLabel_idinsticat}" for="idinsticat" />
+                        <h:panelGroup>
+                            <h:outputText id="idinsticat" value="#{institucioncatController.selected.idinsticat}" />
+                            <p:tooltip for="idinsticat" value="#{institucioncatController.getComponentMessages('idinsticat', myBundle.EditInstitucioncatHelpText_idinsticat)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucioncatLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{institucioncatController.selected.nombre}" title="#{myBundle.EditInstitucioncatTitle_nombre}" required="true" requiredMessage="#{myBundle.EditInstitucioncatRequiredMessage_nombre}" size="100" maxlength="100"/>
+                            <p:tooltip for="nombre" value="#{institucioncatController.getComponentMessages('nombre', myBundle.EditInstitucioncatHelpText_nombre)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{institucioncatController.save}" value="#{myBundle.Save}" update="display,:InstitucioncatListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InstitucioncatEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('InstitucioncatEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

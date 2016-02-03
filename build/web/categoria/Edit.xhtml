@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CategoriaEditDlg" widgetVar="CategoriaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCategoriaTitle}" closeOnEscape="true">
+
+            <h:form id="CategoriaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{categoriaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCategoriaLabel_idcate}" for="idcate" />
+                        <h:panelGroup>
+                            <h:outputText id="idcate" value="#{categoriaController.selected.idcate}" />
+                            <p:tooltip for="idcate" value="#{categoriaController.getComponentMessages('idcate', myBundle.EditCategoriaHelpText_idcate)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCategoriaLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{categoriaController.selected.nombre}" title="#{myBundle.EditCategoriaTitle_nombre}" size="100" maxlength="100"/>
+                            <p:tooltip for="nombre" value="#{categoriaController.getComponentMessages('nombre', myBundle.EditCategoriaHelpText_nombre)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{categoriaController.save}" value="#{myBundle.Save}" update="display,:CategoriaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CategoriaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('CategoriaEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

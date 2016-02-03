@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DetallemedicionEditDlg" widgetVar="DetallemedicionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDetallemedicionTitle}" closeOnEscape="true">
+
+            <h:form id="DetallemedicionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{detallemedicionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditDetallemedicionLabel_iddetallemed}" for="iddetallemed" />
+                        <h:panelGroup>
+                            <h:outputText id="iddetallemed" value="#{detallemedicionController.selected.iddetallemed}" />
+                            <p:tooltip for="iddetallemed" value="#{detallemedicionController.getComponentMessages('iddetallemed', myBundle.EditDetallemedicionHelpText_iddetallemed)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDetallemedicionLabel_isbn}" for="isbn" />
+                        <h:panelGroup>
+                            <p:inputText id="isbn" value="#{detallemedicionController.selected.isbn}" title="#{myBundle.EditDetallemedicionTitle_isbn}" size="15" maxlength="15"/>
+                            <p:tooltip for="isbn" value="#{detallemedicionController.getComponentMessages('isbn', myBundle.EditDetallemedicionHelpText_isbn)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDetallemedicionLabel_detalles}" for="detalles" />
+                        <h:panelGroup>
+                            <p:inputText id="detalles" value="#{detallemedicionController.selected.detalles}" title="#{myBundle.EditDetallemedicionTitle_detalles}" size="100" maxlength="100"/>
+                            <p:tooltip for="detalles" value="#{detallemedicionController.getComponentMessages('detalles', myBundle.EditDetallemedicionHelpText_detalles)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDetallemedicionLabel_idmedicion}" for="idmedicion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idmedicion" value="#{detallemedicionController.selected.idmedicion}" required="true" requiredMessage="#{myBundle.EditDetallemedicionRequiredMessage_idmedicion}" converter="medicionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{medicionController.items}"
+                                               var="idmedicionItem"
+                                               itemValue="#{idmedicionItem}"
+                                               itemLabel="#{idmedicionItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idmedicion" value="#{detallemedicionController.getComponentMessages('idmedicion', myBundle.EditDetallemedicionHelpText_idmedicion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detallemedicionController.save}" value="#{myBundle.Save}" update="display,:DetallemedicionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DetallemedicionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('DetallemedicionEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

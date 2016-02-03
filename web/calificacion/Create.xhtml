@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CalificacionCreateDlg" widgetVar="CalificacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCalificacionTitle}" closeOnEscape="true">
+
+            <h:form id="CalificacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{calificacionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateCalificacionLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{calificacionController.selected.nombre}" title="#{myBundle.CreateCalificacionTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateCalificacionRequiredMessage_nombre}"/>
+                            <p:tooltip for="nombre" value="#{calificacionController.getComponentMessages('nombre', myBundle.CreateCalificacionHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateCalificacionLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{calificacionController.selected.descripcion}" title="#{myBundle.CreateCalificacionTitle_descripcion}" required="true" requiredMessage="#{myBundle.CreateCalificacionRequiredMessage_descripcion}" size="100" maxlength="100"/>
+                            <p:tooltip for="descripcion" value="#{calificacionController.getComponentMessages('descripcion', myBundle.CreateCalificacionHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateCalificacionLabel_bono}" for="bono" />
+                        <h:panelGroup>
+                            <p:inputText id="bono" value="#{calificacionController.selected.bono}" title="#{myBundle.CreateCalificacionTitle_bono}" required="true" requiredMessage="#{myBundle.CreateCalificacionRequiredMessage_bono}"/>
+                            <p:tooltip for="bono" value="#{calificacionController.getComponentMessages('bono', myBundle.CreateCalificacionHelpText_bono)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateCalificacionLabel_puntajemin}" for="puntajemin" />
+                        <h:panelGroup>
+                            <p:inputText id="puntajemin" value="#{calificacionController.selected.puntajemin}" title="#{myBundle.CreateCalificacionTitle_puntajemin}" required="true" requiredMessage="#{myBundle.CreateCalificacionRequiredMessage_puntajemin}"/>
+                            <p:tooltip for="puntajemin" value="#{calificacionController.getComponentMessages('puntajemin', myBundle.CreateCalificacionHelpText_puntajemin)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateCalificacionLabel_puntajemax}" for="puntajemax" />
+                        <h:panelGroup>
+                            <p:inputText id="puntajemax" value="#{calificacionController.selected.puntajemax}" title="#{myBundle.CreateCalificacionTitle_puntajemax}" required="true" requiredMessage="#{myBundle.CreateCalificacionRequiredMessage_puntajemax}"/>
+                            <p:tooltip for="puntajemax" value="#{calificacionController.getComponentMessages('puntajemax', myBundle.CreateCalificacionHelpText_puntajemax)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{calificacionController.saveNew}" value="#{myBundle.Save}" update="display,:CalificacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CalificacionCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('CalificacionCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

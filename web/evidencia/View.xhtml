@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EvidenciaViewDlg" widgetVar="EvidenciaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEvidenciaTitle}" closeOnEscape="true">
+
+            <h:form id="EvidenciaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{evidenciaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEvidenciaLabel_idinvestigador}"/>
+                        <h:outputText value="#{evidenciaController.selected.idinvestigador.nombres} #{evidenciaController.selected.idinvestigador.apellidos}"/>
+                        <h:outputText value="#{myBundle.ViewEvidenciaLabel_fecha}"/>
+                        <h:outputText value="#{evidenciaController.selected.fecha}" title="#{myBundle.ViewEvidenciaTitle_fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEvidenciaLabel_detalles}"/>
+                        <h:outputText value="#{evidenciaController.selected.detalles}" title="#{myBundle.ViewEvidenciaTitle_detalles}"/>
+
+                        <h:outputText value="#{myBundle.ViewEvidenciaLabel_puntos}"/>
+                        <h:outputText value="#{evidenciaController.selected.puntos}" title="#{myBundle.ViewEvidenciaTitle_puntos}"/>
+
+                        <h:outputText value="#{myBundle.ViewEvidenciaLabel_idinstitucion}"/>
+                        <h:outputText value="#{evidenciaController.selected.idinstitucion.nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewEvidenciaLabel_idmedicion}"/>
+                        <h:outputText value="#{evidenciaController.selected.idmedicion.nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewEvidenciaLabel_estado}"/>
+                        <h:outputText value="#{evidenciaController.selected.estado}" title="#{myBundle.ViewEvidenciaTitle_estado}"/>
+                    <h:outputText value="Archivo"/>
+                    <p:commandButton disabled="#{empty evidenciaController.selected.archivo}" onclick="PrimeFaces.monitorDownload(start, stop);" value="Descargar" ajax="false"  icon="ui-icon-arrowthick-1-s">
+                        <p:fileDownload value="#{evidenciaController.file}" />
+                    </p:commandButton>
+                    
+                   
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EvidenciaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

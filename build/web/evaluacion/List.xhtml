@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EvaluacionListForm">
+
+        <p:panel header="#{myBundle.ListEvaluacionTitle}">
+            <p:contextMenu id="EvaluacionDataTableContextMenu" for="datalist">  
+                
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EvaluacionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EvaluacionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EvaluacionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.EvaluacionMenuItem_idcal}" icon="ui-icon-search"  actionListener="#{evaluacionController.prepareIdcal}" update=":CalificacionViewForm" oncomplete="PF('CalificacionViewDialog').show()" disabled="#{empty evaluacionController.selected.idcal}"/>  
+                <p:menuitem value="#{myBundle.EvaluacionMenuItem_idinvestigador}" icon="ui-icon-search"  actionListener="#{evaluacionController.prepareIdinvestigador}" update=":InvestigadorViewForm" oncomplete="PF('InvestigadorViewDialog').show()" disabled="#{empty evaluacionController.selected.idinvestigador}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{evaluacionController.items}"
+                         var="item"
+                         rowKey="#{item.ideva}" rowStyleClass="#{item.idcal.nombre}"
+                         
+                         paginator="true"
+                         rows="50"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{evaluacionController.selected}">
+
+                <p:ajax event="rowSelect"   update=":EvaluacionListForm:createButton :EvaluacionListForm:viewButton :EvaluacionListForm:editButton :EvaluacionListForm:deleteButton :EvaluacionListForm:EvaluacionDataTableContextMenu" listener="#{evaluacionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":EvaluacionListForm:createButton :EvaluacionListForm:viewButton :EvaluacionListForm:editButton :EvaluacionListForm:deleteButton :EvaluacionListForm:EvaluacionDataTableContextMenu" listener="#{evaluacionController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EvaluacionListForm:viewButton').click();"/>
+
+                <p:column width="25">
+                    <f:facet name="header">
+                        <h:outputText value="Id"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ideva}"/>
+                </p:column>
+
+ <p:column sortBy="#{item.idinvestigador.nombres}" filterBy="#{item.idinvestigador.nombres}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEvaluacionTitle_idinvestigador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idinvestigador.nombres} #{item.idinvestigador.apellidos}"/>
+                </p:column>
+                <p:column width="110" filterMatchMode="contains" sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEvaluacionTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column width="50">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEvaluacionTitle_puntaje}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.puntaje}"/>
+                </p:column>
+              
+
+
+                <p:column width="100" sortBy="#{item.idcal.nombre}" filterBy="#{item.idcal.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEvaluacionTitle_idcal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idcal.nombre}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Descripcion"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idcal.descripcion}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Bono"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idcal.bono}"/>
+                </p:column>
+
+
+               
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{evaluacionController.prepareCreate}" update=":EvaluacionCreateForm" oncomplete="PF('EvaluacionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EvaluacionViewForm" oncomplete="PF('EvaluacionViewDialog').show()" disabled="#{empty evaluacionController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EvaluacionEditForm" oncomplete="PF('EvaluacionEditDialog').show()" disabled="#{empty evaluacionController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{evaluacionController.delete}" update=":growl,datalist" disabled="#{empty evaluacionController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="MedicionEditDlg" widgetVar="MedicionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditMedicionTitle}" closeOnEscape="true">
+
+            <h:form id="MedicionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{medicionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditMedicionLabel_idmedicion}" for="idmedicion" />
+                        <h:panelGroup>
+                            <h:outputText id="idmedicion" value="#{medicionController.selected.idmedicion}" />
+                            <p:tooltip for="idmedicion" value="#{medicionController.getComponentMessages('idmedicion', myBundle.EditMedicionHelpText_idmedicion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditMedicionLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{medicionController.selected.nombre}" title="#{myBundle.EditMedicionTitle_nombre}" required="true" requiredMessage="#{myBundle.EditMedicionRequiredMessage_nombre}" size="100" maxlength="100"/>
+                            <p:tooltip for="nombre" value="#{medicionController.getComponentMessages('nombre', myBundle.EditMedicionHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditMedicionLabel_indicador}" for="indicador" />
+                        <h:panelGroup>
+                            <p:inputText id="indicador" value="#{medicionController.selected.indicador}" title="#{myBundle.EditMedicionTitle_indicador}" required="true" requiredMessage="#{myBundle.EditMedicionRequiredMessage_indicador}" size="100" maxlength="100"/>
+                            <p:tooltip for="indicador" value="#{medicionController.getComponentMessages('indicador', myBundle.EditMedicionHelpText_indicador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditMedicionLabel_puntaje}" for="puntaje" />
+                        <h:panelGroup>
+                            <p:inputText id="puntaje" value="#{medicionController.selected.puntaje}" title="#{myBundle.EditMedicionTitle_puntaje}" required="true" requiredMessage="#{myBundle.EditMedicionRequiredMessage_puntaje}"/>
+                            <p:tooltip for="puntaje" value="#{medicionController.getComponentMessages('puntaje', myBundle.EditMedicionHelpText_puntaje)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditMedicionLabel_idcate}" for="idcate" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idcate" value="#{medicionController.selected.idcate}" required="true" requiredMessage="#{myBundle.EditMedicionRequiredMessage_idcate}" converter="categoriaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{categoriaController.items}"
+                                               var="idcateItem"
+                                               itemValue="#{idcateItem}"
+                                               itemLabel="#{idcateItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idcate" value="#{medicionController.getComponentMessages('idcate', myBundle.EditMedicionHelpText_idcate)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medicionController.save}" value="#{myBundle.Save}" update="display,:MedicionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MedicionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('MedicionEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

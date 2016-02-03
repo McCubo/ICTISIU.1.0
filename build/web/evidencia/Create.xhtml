@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EvidenciaCreateDlg" widgetVar="EvidenciaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEvidenciaTitle}" closeOnEscape="true">
+
+            <h:form id="EvidenciaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{evidenciaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+                        
+                        <p:outputLabel value="#{myBundle.CreateEvidenciaLabel_idinvestigador}" for="idinvestigador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idinvestigador" value="#{evidenciaController.selected.idinvestigador}" required="true" requiredMessage="#{myBundle.CreateEvidenciaRequiredMessage_idinvestigador}" converter="investigadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{investigadorController.items}"
+                                               var="idinvestigadorItem"
+                                               itemValue="#{idinvestigadorItem}"
+                                               itemLabel="#{idinvestigadorItem.nombres.toString()} #{idinvestigadorItem.apellidos.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idinvestigador" value="#{evidenciaController.getComponentMessages('idinvestigador', myBundle.CreateEvidenciaHelpText_idinvestigador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateEvidenciaLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" locale="es" navigator="true" pattern="dd/MM/yyyy" value="#{evidenciaController.selected.fecha}" title="#{myBundle.CreateEvidenciaTitle_fecha}"  showOn="button"/>
+                            <p:tooltip for="fecha" value="#{evidenciaController.getComponentMessages('fecha', myBundle.CreateEvidenciaHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        
+                         <p:outputLabel value="Tipo de Institucion" for="idinstitucion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idinstitucion" value="#{institucioncatController.selected}" required="true" requiredMessage="#{myBundle.CreateEvidenciaRequiredMessage_idinstitucion}" converter="institucioncatConverter">
+                                <p:ajax update=":EvidenciaCreateForm:idinsticat" event="change" />
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{institucioncatController.items}"
+                                               var="idinsticatItem"
+                                               itemValue="#{idinsticatItem}"
+                                               itemLabel="#{idinsticatItem.nombre.toString()}"
+                                               
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idinstitucion" value="#{evidenciaController.getComponentMessages('idinstitucion', myBundle.CreateEvidenciaHelpText_idinstitucion)}"/>
+                        </h:panelGroup>
+                        <p:outputLabel value="Institucion" for="idinsticat" />
+                        <h:panelGroup>
+                            
+                            <p:selectOneMenu id="idinsticat" required="true" value="#{evidenciaController.selected.idinstitucion}" requiredMessage="#{myBundle.CreateEvidenciaRequiredMessage_idinstitucion}" converter="institucionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{institucioncatController.selected.institucionList}"
+                                               var="idinstitucionItem"
+                                               itemValue="#{idinstitucionItem}"
+                                               itemLabel="#{idinstitucionItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                                                        <p:tooltip for="idinstitucion" value="#{evidenciaController.getComponentMessages('idinstitucion', myBundle.CreateEvidenciaHelpText_idinstitucion)}"/>
+                        </h:panelGroup>
+
+                        
+
+                        <p:outputLabel value="Categoria" for="categoria" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="categoria" value="#{categoriaController.selected}" required="true" requiredMessage="#{myBundle.CreateEvidenciaRequiredMessage_idmedicion}" converter="categoriaConverter">
+                                <p:ajax update=":EvidenciaCreateForm:idmedicion" event="change" />
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{categoriaController.items}"
+                                               var="categoriaItem"
+                                               itemValue="#{categoriaItem}"
+                                               itemLabel="#{categoriaItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            
+                            <p:tooltip for="idmedicion" value="#{evidenciaController.getComponentMessages('idmedicion', myBundle.CreateEvidenciaHelpText_idmedicion)}"/>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="#{myBundle.CreateEvidenciaLabel_idmedicion}" for="idmedicion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idmedicion" value="#{evidenciaController.selected.idmedicion}" required="true" requiredMessage="#{myBundle.CreateEvidenciaRequiredMessage_idmedicion}" converter="medicionConverter">
+                                <p:ajax event="change" listener="#{evidenciaController.pasarPuntos(null)}" update=":EvidenciaCreateForm:puntos" />
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{categoriaController.selected.medicionList}"
+                                               var="idmedicionItem"
+                                               itemValue="#{idmedicionItem}"
+                                               itemLabel="#{idmedicionItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idmedicion" value="#{evidenciaController.getComponentMessages('idmedicion', myBundle.CreateEvidenciaHelpText_idmedicion)}"/>
+                        </h:panelGroup>
+                        <p:outputLabel value="#{myBundle.CreateEvidenciaLabel_puntos}" for="puntos" />
+                        <h:panelGroup>
+                            <p:inputText id="puntos" value="#{evidenciaController.selected.puntos}" title="#{myBundle.CreateEvidenciaTitle_puntos}" required="true" requiredMessage="#{myBundle.CreateEvidenciaRequiredMessage_puntos}"/>
+                            <p:tooltip for="puntos" value="#{evidenciaController.getComponentMessages('puntos', myBundle.CreateEvidenciaHelpText_puntos)}"/>
+                        </h:panelGroup>
+                        <p:outputLabel value="#{myBundle.CreateEvidenciaLabel_detalles}" for="detalles" />
+                        <h:panelGroup>
+                            <p:inputTextarea id="detalles" value="#{evidenciaController.selected.detalles}" title="#{myBundle.CreateEvidenciaTitle_detalles}" cols="50" maxlength="150"/>
+                            <p:tooltip for="detalles" value="#{evidenciaController.getComponentMessages('detalles', myBundle.CreateEvidenciaHelpText_detalles)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateEvidenciaLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="estado" value="#{evidenciaController.selected.estado}">
+                        <f:selectItem itemLabel="Select One" itemValue="Aceptado" />
+                            <f:selectItem itemLabel="Aceptado" itemValue="Aceptado" />
+                            <f:selectItem itemLabel="Pendiente" itemValue="Pendiente" />
+                            <f:selectItem itemLabel="Rechazado" itemValue="Rechazado" />
+                            
+                        </p:selectOneMenu>
+                            <p:tooltip for="estado" value="#{evidenciaController.getComponentMessages('estado', myBundle.CreateEvidenciaHelpText_estado)}"/>
+                        </h:panelGroup>
+                        <p:outputLabel value="Archivo" for="archivo" />
+                        <h:panelGroup>
+                            <p:fileUpload update=":EvidenciaCreateForm:ubicacion" fileLimit="1" id="archivo" fileUploadListener="#{evidenciaController.guardarArchivo}"/>
+                            <p:tooltip for="archivo" value="Agregar archivo como comprobante"/>
+                        </h:panelGroup>
+                        <p:outputLabel value="Nombre Archivo" for="ubicacion" />
+                        <h:panelGroup>
+                            <p:inputText id="ubicacion" disabled="true" value="#{evidenciaController.selected.archivo}" size="50" maxlength="100"/>
+                            <p:tooltip for="ubicacion" value="Nombre del archivo"/>
+                        </h:panelGroup>
+                        
+                        </p:panelGrid>
+                    
+                    <p:commandButton actionListener="#{evidenciaController.saveNew}" value="#{myBundle.Save}" update="display,:EvidenciaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EvidenciaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('EvidenciaCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

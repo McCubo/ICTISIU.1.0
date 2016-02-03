@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition template="/template2.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{myBundle.AppName}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <p:panel header="Investigadores evaluados">
+                 <h:form id="evalua">
+                     <p:panelGrid columns="3">
+                         
+                <p:outputLabel value="Año " for="ano"/>
+                <h:panelGroup>
+                    <p:inputText id="ano" maxlength="4" value="#{evaluacionController.anoeva}"/>
+                  <pe:keyFilter for="ano" mask="num"/>            
+                <p:commandButton value="Buscar" update=":evalua:mitabla, bdoc, bexcel"/>
+                <p:commandButton id="bdoc" disabled="#{empty evaluacionController.listaEva}" value="Descargar Doc" ajax="false" actionListener="#{evaluacionController.personalizadoDOCX}" />
+                <p:commandButton id="bexcel" disabled="#{empty evaluacionController.listaEva}" value="Descargar Excel" ajax="false" actionListener="#{evaluacionController.XLSX}" />
+                </h:panelGroup>
+               
+                    </p:panelGrid>
+                <p:dataTable id="mitabla" var="datos" value="#{evaluacionController.listaEva}" emptyMessage="No hay datos">
+                 <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nombre"/>
+                    </f:facet>
+                     <h:outputText value="#{datos.idinvestigador.nombres} #{datos.idinvestigador.apellidos}"/>
+                </p:column>
+                
+                    <p:column width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Fecha"/>
+                    </f:facet>
+                <h:outputText value="#{datos.fecha}"> 
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                </p:column>
+
+                    <p:column width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Puntos"/>
+                    </f:facet>
+                    <h:outputText value="#{datos.puntaje}"/>
+                </p:column>
+                    
+                    <p:column width="100">
+                    <f:facet name="header">
+                        <h:outputText value="Categoria"/>
+                    </f:facet>
+                        <h:outputText value="#{datos.idcal.nombre}"/>
+                </p:column>
+                     <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Descripcion"/>
+                    </f:facet>
+                         <h:outputText value="#{datos.idcal.descripcion}"/>
+                </p:column>
+                    <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Bono"/>
+                    </f:facet>
+                        <h:outputText value="#{datos.idcal.bono}"/>
+                </p:column>
+                </p:dataTable>
+                 
+            </h:form>
+            </p:panel>
+            
+           
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

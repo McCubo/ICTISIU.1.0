@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition template="/template2.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{myBundle.AppName}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <p:panel header="Investigador">
+                 <h:form id="buscaInvestigador">
+                     <p:panelGrid columns="2">
+                     <p:outputLabel value="Estado Investigador" for="estado"/>
+                     <h:panelGroup>
+                         <p:selectOneRadio id="estado" value="#{investigadorController.estado}">
+                         <p:ajax update="investigador" event="valueChange" />
+                             <f:selectItem itemValue="A" itemLabel="Activo"/>
+                             <f:selectItem itemValue="I" itemLabel="Inactivo"/>
+                         </p:selectOneRadio>
+                     </h:panelGroup> 
+                     <p:outputLabel value="Investigador" for="investigador"/>
+                     <h:panelGroup>
+                         <p:selectOneMenu id="investigador" value="#{investigadorController.investigador}" required="true" requiredMessage="#{myBundle.CreateEvidenciaRequiredMessage_idinvestigador}" converter="investigadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{investigadorController.invesestado}"
+                                               var="idinvestigadorItem"
+                                               itemValue="#{idinvestigadorItem}"
+                                               itemLabel="#{idinvestigadorItem.nombres.toString()} #{idinvestigadorItem.apellidos.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                           
+                        </h:panelGroup>
+                <p:outputLabel value="Año desde" for="ano"/>
+                <h:panelGroup>
+                    <p:inputText id="ano" required="true" maxlength="4" size="7" value="#{investigadorController.ano}"/>
+                  <pe:keyFilter for="ano" mask="num"/>  
+                  <p:outputLabel value="Año hasta" for="ano2"/>
+                  <h:panelGroup>
+                      <p:inputText id="ano2" maxlength="4" size="7" value="#{investigadorController.ano2}"/>
+                  <pe:keyFilter for="ano2" mask="num"/>   
+                  </h:panelGroup>
+                  <p:commandButton value="Buscar" update="mitabla, mitabla2, bdoc"/>
+                  <p:commandButton id="bdoc" disabled="#{empty investigadorController.investigador}" value="Descargar Doc" ajax="false" actionListener="#{investigadorController.personalizadoDOCX}" />
+               
+                </h:panelGroup>
+               
+                    </p:panelGrid>
+                <p:dataTable id="mitabla" var="datos" value="#{investigadorController.investigador}" emptyMessage="No hay datos">
+                               
+                    <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nombre"/>
+                    </f:facet>
+                <h:outputText value="#{datos.nombres} #{datos.apellidos}"> 
+                   
+                </h:outputText>
+                </p:column>
+
+                    <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Email"/>
+                    </f:facet>
+                    <h:outputText value="#{datos.email}"/>
+                </p:column>
+                    
+                    <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Telefono"/>
+                    </f:facet>
+                        <h:outputText value="#{datos.telefono}"/>
+                </p:column>
+                    </p:dataTable>
+                     <p:dataList id="mitabla2" var="evidencias" value="#{investigadorController.listaEvidencia}" emptyMessage="No hay evidencias" type="ordered">
+                      <f:facet name="header">
+                        Evidencias
+                     </f:facet>
+                         Año: #{evidencias.fecha}, #{evidencias.idmedicion.nombre}, #{evidencias.puntos}
+                     </p:dataList>
+                 
+            </h:form>
+            </p:panel>
+            
+           
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

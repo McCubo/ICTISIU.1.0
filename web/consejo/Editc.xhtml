@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EvidenciaEditDlg" widgetVar="EvidenciaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEvidenciaTitle}" closeOnEscape="true">
+
+            <h:form id="EvidenciaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{evidenciaController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.EditEvidenciaLabel_idinvestigador}" for="idinvestigador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu disabled="true" id="idinvestigador" value="#{evidenciaController.selected.idinvestigador}" required="true" requiredMessage="#{myBundle.EditEvidenciaRequiredMessage_idinvestigador}" converter="investigadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{investigadorController.items}"
+                                               var="idinvestigadorItem"
+                                               itemValue="#{idinvestigadorItem}"
+                                               itemLabel="#{idinvestigadorItem.nombres.toString()} #{idinvestigadorItem.apellidos.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idinvestigador" value="#{evidenciaController.getComponentMessages('idinvestigador', myBundle.EditEvidenciaHelpText_idinvestigador)}"/>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="#{myBundle.EditEvidenciaLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar disabled="true" id="fecha" locale="es" navigator="true" pattern="dd/MM/yyyy" value="#{evidenciaController.selected.fecha}" title="#{myBundle.EditEvidenciaTitle_fecha}"  showOn="button"/>
+                            <p:tooltip for="fecha" value="#{evidenciaController.getComponentMessages('fecha', myBundle.EditEvidenciaHelpText_fecha)}"/>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="Institucion" for="idinsticat" />
+                        <h:panelGroup>
+                            
+                            <p:selectOneMenu disabled="true" id="idinsticat" required="true" value="#{evidenciaController.selected.idinstitucion}" requiredMessage="#{myBundle.CreateEvidenciaRequiredMessage_idinstitucion}" converter="institucionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{institucionController.items}"
+                                               var="idinstitucionItem"
+                                               itemValue="#{idinstitucionItem}"
+                                               itemLabel="#{idinstitucionItem.idinsticat.nombre.toString()}| #{idinstitucionItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                                                        <p:tooltip for="idinsticat" value="#{evidenciaController.getComponentMessages('idinsticat', myBundle.CreateEvidenciaHelpText_idinstitucion)}"/>
+                        </h:panelGroup>
+                         
+                        
+                       
+<p:outputLabel value="#{myBundle.EditEvidenciaLabel_idmedicion}" for="idmedicion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu  disabled="true" id="idmedicion" value="#{evidenciaController.selected.idmedicion}" required="true" requiredMessage="#{myBundle.EditEvidenciaRequiredMessage_idmedicion}" converter="medicionConverter">
+                                <p:ajax event="change" listener="#{evidenciaController.pasarPuntos(null)}" update=":EvidenciaEditForm:puntos" />
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{medicionController.items}"
+                                               var="idmedicionItem"
+                                               itemValue="#{idmedicionItem}"
+                                               itemLabel="#{idmedicionItem.idcate.nombre.toString()} | #{idmedicionItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idmedicion" value="#{evidenciaController.getComponentMessages('idmedicion', myBundle.EditEvidenciaHelpText_idmedicion)}"/>
+                        </h:panelGroup>
+                        <p:outputLabel value="#{myBundle.EditEvidenciaLabel_puntos}" for="puntos" />
+                        <h:panelGroup>
+                            <p:inputText id="puntos" value="#{evidenciaController.selected.puntos}" title="#{myBundle.EditEvidenciaTitle_puntos}" required="true" requiredMessage="#{myBundle.EditEvidenciaRequiredMessage_puntos}"/>
+                            <p:tooltip for="puntos" value="#{evidenciaController.getComponentMessages('puntos', myBundle.EditEvidenciaHelpText_puntos)}"/>
+                        </h:panelGroup>
+                        <p:outputLabel value="#{myBundle.EditEvidenciaLabel_detalles}" for="detalles" />
+                         <h:panelGroup>
+                             <p:inputTextarea id="detalles" value="#{evidenciaController.selected.detalles}" title="#{myBundle.EditEvidenciaTitle_detalles}" cols="50" maxlength="150"/>
+                            <p:tooltip for="detalles" value="#{evidenciaController.getComponentMessages('detalles', myBundle.EditEvidenciaHelpText_detalles)}"/>
+                            
+                        </h:panelGroup>
+                                               
+
+                        <p:outputLabel value="#{myBundle.EditEvidenciaLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="estado" value="#{evidenciaController.selected.estado}">
+                        <f:selectItem itemLabel="Select One" itemValue="Aceptado" />
+                            <f:selectItem itemLabel="Aceptado" itemValue="Aceptado" />
+                            <f:selectItem itemLabel="Pendiente" itemValue="Pendiente" />
+                            <f:selectItem itemLabel="Rechazado" itemValue="Rechazado" />
+                            
+                        </p:selectOneMenu>
+                            
+                            <p:tooltip for="estado" value="#{evidenciaController.getComponentMessages('estado', myBundle.EditEvidenciaHelpText_estado)}"/>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="Archivo" for="archivo" />
+                        <h:panelGroup>
+                            <p:fileUpload disabled="true" update=":EvidenciaEditForm:ubicacion" fileLimit="1" id="archivo" fileUploadListener="#{evidenciaController.guardarArchivo}"/>
+                            
+                            <p:tooltip for="archivo" value="Agregar archivo como comprobante"/>
+                        </h:panelGroup>
+                        <p:outputLabel value="Nombre Archivo" for="ubicacion" />
+                        <h:panelGroup>
+                            <p:inputText  id="ubicacion" disabled="true" value="#{evidenciaController.selected.archivo}" size="50" maxlength="100"/>
+                            <p:tooltip for="ubicacion" value="Nombre del archivo"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{evidenciaController.save}" value="#{myBundle.Save}" update="display,:EvidenciaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EvidenciaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('EvidenciaEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

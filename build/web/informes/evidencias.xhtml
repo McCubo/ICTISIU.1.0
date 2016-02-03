@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template2.xhtml"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:define name="title">
+        <h:outputText value="#{myBundle.InvestigadorTitle}"/>
+    </ui:define>
+
+    <ui:define name="body">
+<h:form id="EvidenciaListForm">
+
+        <p:panel header="#{myBundle.ListEvidenciaTitle}">
+            <p:contextMenu id="EvidenciaDataTableContextMenu" for="datalist">  
+                
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EvidenciaListForm:viewButton').click();" icon="ui-icon-search"/>
+                
+                
+            
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{evidenciaController.items}"
+                         var="item"
+                         rowKey="#{item.idevidencia}"
+                         rowStyleClass="#{item.estado}"
+                         scrollable="true"
+                         selectionMode="single"
+                         selection="#{evidenciaController.selected}">
+                 <f:facet name="header">
+                    
+            <h:commandLink>
+                <p:graphicImage value="/imagenes/pdf.png" width="24"/>
+                <pe:exporter type="pdf" target="datalist" fileName="evidencias" preProcessor="#{evidenciaController.preProcessPDF}"  facetBackground="#547BF9"  
+                         datasetPadding="4" encoding="iso-8859-1"/>
+            </h:commandLink>
+ 
+            
+        </f:facet>
+
+                <p:ajax event="rowSelect"   update=":EvidenciaListForm:viewButton :EvidenciaListForm:EvidenciaDataTableContextMenu" listener="#{evidenciaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":EvidenciaListForm:viewButton :EvidenciaListForm:EvidenciaDataTableContextMenu" listener="#{evidenciaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EvidenciaListForm:viewButton').click();"/>
+
+               
+
+                <p:column sortBy="#{item.idinvestigador.nombres}" filterBy="#{item.idinvestigador.nombres}">
+                    <f:facet name="header">
+                        <h:outputText value="Nombres"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idinvestigador.nombres} #{item.idinvestigador.apellidos} "/>
+                </p:column>
+                
+                <p:column sortBy="#{item.fecha}" filterMatchMode="contains" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEvidenciaTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEvidenciaTitle_puntos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.puntos}"/>
+                </p:column>
+
+                <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListEvidenciaTitle_idmedicion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idmedicion.nombre}"/>
+                                    </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEvidenciaTitle_idinstitucion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idinstitucion.nombre}"/>
+                </p:column>
+
+                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListEvidenciaTitle_estado}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.estado}"/>
+                                    </p:column>
+               
+
+                <!--
+                                    
+                -->
+                <!--
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEvidenciaTitle_detalles}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.detalles}"/>
+                </p:column>
+                 <p:column sortBy="#{item.idevidencia}" filterBy="#{item.idevidencia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEvidenciaTitle_idevidencia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idevidencia}"/>
+                </p:column>
+                                    
+                -->
+
+            </p:dataTable>
+
+            
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EvidenciaViewForm" oncomplete="PF('EvidenciaViewDialog').show()" disabled="#{empty evidenciaController.selected}"/>
+            
+            
+
+        </p:panel>
+    
+        
+    </h:form>
+        <ui:include src="/evidencia/View.xhtml"/>
+
+    </ui:define>
+
+</ui:composition>

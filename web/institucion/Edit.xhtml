@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="InstitucionEditDlg" widgetVar="InstitucionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditInstitucionTitle}" closeOnEscape="true">
+
+            <h:form id="InstitucionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{institucionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditInstitucionLabel_idinstitucion}" for="idinstitucion" />
+                        <h:panelGroup>
+                            <h:outputText id="idinstitucion" value="#{institucionController.selected.idinstitucion}" />
+                            <p:tooltip for="idinstitucion" value="#{institucionController.getComponentMessages('idinstitucion', myBundle.EditInstitucionHelpText_idinstitucion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{institucionController.selected.nombre}" title="#{myBundle.EditInstitucionTitle_nombre}" required="true" requiredMessage="#{myBundle.EditInstitucionRequiredMessage_nombre}" size="150" maxlength="150"/>
+                            <p:tooltip for="nombre" value="#{institucionController.getComponentMessages('nombre', myBundle.EditInstitucionHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionLabel_idinsticat}" for="idinsticat" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idinsticat" value="#{institucionController.selected.idinsticat}" required="true" requiredMessage="#{myBundle.EditInstitucionRequiredMessage_idinsticat}" converter="institucioncatConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{institucioncatController.items}"
+                                               var="idinsticatItem"
+                                               itemValue="#{idinsticatItem}"
+                                               itemLabel="#{idinsticatItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idinsticat" value="#{institucionController.getComponentMessages('idinsticat', myBundle.EditInstitucionHelpText_idinsticat)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{institucionController.save}" value="#{myBundle.Save}" update="display,:InstitucionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InstitucionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('InstitucionEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

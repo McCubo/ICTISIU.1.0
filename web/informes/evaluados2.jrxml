@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6f70e581-a52c-4c35-bcd6-ffd91606b670">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="18"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="fecha" class="java.util.Date">
+		<fieldDescription><![CDATA[fecha]]></fieldDescription>
+	</field>
+	<field name="idcal" class="sv.edu.ufg.icti.siu.entidades.Calificacion">
+		<fieldDescription><![CDATA[idcal]]></fieldDescription>
+	</field>
+	<field name="ideva" class="java.lang.Integer">
+		<fieldDescription><![CDATA[ideva]]></fieldDescription>
+	</field>
+	<field name="idinvestigador" class="sv.edu.ufg.icti.siu.entidades.Investigador">
+		<fieldDescription><![CDATA[idinvestigador]]></fieldDescription>
+	</field>
+	<field name="puntaje" class="java.lang.Integer">
+		<fieldDescription><![CDATA[puntaje]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement x="264" y="20" width="274" height="20" uuid="97b32450-af46-4b84-a4c0-252f98a412f4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO DE CIENCIAS, TECNOLIGIA E INNOVACION]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="379" y="60" width="100" height="20" uuid="19d3122c-7a35-4dfa-aff6-d8cc72b4e4e6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ano}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="351" y="60" width="24" height="20" uuid="b8d4bbd6-1e43-4ba3-879d-c9b734d91611"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AÑO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="0" width="200" height="20" uuid="f382662a-7c9c-41ce-8fe5-b48b3e606df3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD FRANCISCO GAVIDIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="40" width="218" height="20" uuid="faaa000a-cf18-47e3-a758-f8d78b6c3492"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERSONAL SISTEMA DE INVESTIGACION]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<frame>
+				<reportElement mode="Transparent" x="2" y="8" width="727" height="21" uuid="244dc338-9d18-4097-a077-5c1b45ba1741"/>
+				<staticText>
+					<reportElement x="1" y="0" width="36" height="20" uuid="7e01949c-b68c-4039-82f9-560eb7f1cbbe"/>
+					<text><![CDATA[No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="225" y="0" width="100" height="20" uuid="cecb950d-832a-43f7-890f-99881bf27a2a"/>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="325" y="0" width="102" height="20" uuid="53cad38c-f604-4920-8494-39ad636c9ddb"/>
+					<text><![CDATA[puntaje]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="428" y="0" width="100" height="20" uuid="8fb610b5-23c1-4084-b693-04624cf06c42"/>
+					<text><![CDATA[Categoría]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="527" y="0" width="100" height="20" uuid="ef676c34-a58f-4d1c-b7ed-0605b2189e87"/>
+					<text><![CDATA[Bono]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="37" y="0" width="188" height="20" uuid="a6119679-0028-4bc3-afc5-fc1252653eab"/>
+					<text><![CDATA[Nombre]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="627" y="0" width="98" height="20" uuid="7239198d-030f-4217-8fc1-b14714cbc7cc"/>
+					<text><![CDATA[Firma]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="727" height="20" uuid="88c9d438-df92-408c-9fbf-9a780ea119bb"/>
+				</rectangle>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="36" height="20" uuid="8e700d3f-f95f-488d-9c85-c01d05a0d300"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="38" y="0" width="188" height="20" uuid="71ff09b7-565c-4047-b531-a13d31f5d774"/>
+				<textFieldExpression><![CDATA[""+$F{idinvestigador}.getNombres()+" "+$F{idinvestigador}.getApellidos()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="0" width="100" height="20" uuid="8e8e0836-7363-4de4-80cf-6b7f8671b224"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ano}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="0" width="102" height="20" uuid="97894bdc-f7c2-4797-aebd-fc029fe264f2"/>
+				<textFieldExpression><![CDATA[$F{puntaje}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="0" width="100" height="20" uuid="cdf7de33-6c02-4858-a2ca-5a8ef550155e"/>
+				<textFieldExpression><![CDATA[""+$F{idcal}.getNombre()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="529" y="0" width="100" height="20" uuid="8a771acf-b851-410f-9f29-ab89531864be"/>
+				<textFieldExpression><![CDATA[""+$F{idcal}.getBono()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="627" y="0" width="98" height="20" uuid="1a6a705d-3c4d-4040-8869-2025b2b51ebb"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="20" width="726" height="1" uuid="21bc281c-bb69-4b9b-bbb8-33d8b398bd15"/>
+			</line>
+			<line>
+				<reportElement x="2" y="0" width="1" height="20" uuid="b174becf-2320-4ded-a32b-efb59fa5afd1"/>
+			</line>
+			<line>
+				<reportElement x="38" y="-21" width="1" height="40" uuid="5ae46d0c-2968-4f55-b2e7-743bc11e2d99"/>
+			</line>
+			<line>
+				<reportElement x="224" y="-21" width="1" height="40" uuid="41127efc-5fa5-4eee-b9ea-a3200f558534"/>
+			</line>
+			<line>
+				<reportElement x="325" y="-20" width="1" height="40" uuid="36656dda-adaa-4867-8bc1-fdf85e36ca98"/>
+			</line>
+			<line>
+				<reportElement x="428" y="-20" width="1" height="40" uuid="894b9bff-ffd5-40af-a51e-ac7077a0c7f2"/>
+			</line>
+			<line>
+				<reportElement x="525" y="-20" width="1" height="40" uuid="912eaf66-55c3-4f9b-8e05-68f23957ef3b"/>
+			</line>
+			<line>
+				<reportElement x="627" y="-21" width="1" height="40" uuid="aa170aca-25d6-4192-b3c6-f76be107fe54"/>
+			</line>
+			<line>
+				<reportElement x="728" y="0" width="1" height="20" uuid="cf523d88-9aed-4b0d-accd-414e0bc15563"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

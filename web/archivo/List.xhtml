@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ArchivoListForm">
+
+        <p:panel header="#{myBundle.ListArchivoTitle}">
+            <p:contextMenu id="ArchivoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ArchivoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ArchivoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ArchivoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ArchivoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.ArchivoMenuItem_idevidencia}" icon="ui-icon-search"  actionListener="#{archivoController.prepareIdevidencia}" update=":EvidenciaViewForm" oncomplete="PF('EvidenciaViewDialog').show()" disabled="#{empty archivoController.selected.idevidencia}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{archivoController.items}"
+                         var="item"
+                         rowKey="#{item.idarchivo}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{archivoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":ArchivoListForm:createButton :ArchivoListForm:viewButton :ArchivoListForm:editButton :ArchivoListForm:deleteButton :ArchivoListForm:ArchivoDataTableContextMenu" listener="#{archivoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":ArchivoListForm:createButton :ArchivoListForm:viewButton :ArchivoListForm:editButton :ArchivoListForm:deleteButton :ArchivoListForm:ArchivoDataTableContextMenu" listener="#{archivoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ArchivoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idarchivo}" filterBy="#{item.idarchivo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArchivoTitle_idarchivo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idarchivo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ruta}" filterBy="#{item.ruta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArchivoTitle_ruta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ruta}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idevidencia.idevidencia}" filterBy="#{item.idevidencia.idevidencia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListArchivoTitle_idevidencia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idevidencia.idevidencia}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{archivoController.prepareCreate}" update=":ArchivoCreateForm" oncomplete="PF('ArchivoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ArchivoViewForm" oncomplete="PF('ArchivoViewDialog').show()" disabled="#{empty archivoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ArchivoEditForm" oncomplete="PF('ArchivoEditDialog').show()" disabled="#{empty archivoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{archivoController.delete}" update=":growl,datalist" disabled="#{empty archivoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

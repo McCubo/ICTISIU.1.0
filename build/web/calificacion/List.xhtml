@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CalificacionListForm">
+
+        <p:panel header="#{myBundle.ListCalificacionTitle}">
+            <p:contextMenu id="CalificacionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CalificacionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CalificacionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CalificacionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CalificacionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CalificacionMenuItem_evaluacionList}" icon="ui-icon-search"  action="#{calificacionController.navigateEvaluacionList}" disabled="#{empty calificacionController.selected.evaluacionList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{calificacionController.items}"
+                         var="item"
+                         rowKey="#{item.idcal}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{calificacionController.selected}">
+
+                <p:ajax event="rowSelect"   update=":CalificacionListForm:createButton :CalificacionListForm:viewButton :CalificacionListForm:editButton :CalificacionListForm:deleteButton :CalificacionListForm:CalificacionDataTableContextMenu" listener="#{calificacionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":CalificacionListForm:createButton :CalificacionListForm:viewButton :CalificacionListForm:editButton :CalificacionListForm:deleteButton :CalificacionListForm:CalificacionDataTableContextMenu" listener="#{calificacionController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CalificacionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idcal}" filterBy="#{item.idcal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionTitle_idcal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idcal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.bono}" filterBy="#{item.bono}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionTitle_bono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.bono}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.puntajemin}" filterBy="#{item.puntajemin}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionTitle_puntajemin}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.puntajemin}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.puntajemax}" filterBy="#{item.puntajemax}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionTitle_puntajemax}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.puntajemax}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{calificacionController.prepareCreate}" update=":CalificacionCreateForm" oncomplete="PF('CalificacionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CalificacionViewForm" oncomplete="PF('CalificacionViewDialog').show()" disabled="#{empty calificacionController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CalificacionEditForm" oncomplete="PF('CalificacionEditDialog').show()" disabled="#{empty calificacionController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{calificacionController.delete}" update=":growl,datalist" disabled="#{empty calificacionController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsersCreateDlg" widgetVar="UsersCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateUsuarioTitle}" closeOnEscape="true">
+
+            <h:form id="UsersCreateForm">
+
+                 <h:panelGroup id="display" rendered="#{usersController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_usuario}" for="usuario" />
+                        <h:panelGroup>
+                            <p:inputText id="usuario" value="#{usersController.selected.username}" title="#{myBundle.CreateUsuarioTitle_usuario}" required="true" requiredMessage="#{myBundle.CreateUsuarioRequiredMessage_usuario}" size="100" maxlength="100"/>
+                            <p:tooltip for="usuario" value="#{usuarioController.getComponentMessages('usuario', myBundle.CreateUsuarioHelpText_usuario)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUsuarioLabel_password}" for="password" />
+                        <h:panelGroup>
+                            <p:password id="password" size="100" maxlength="100" redisplay="true"  value="#{usersController.selected.password}" title="#{myBundle.CreateUsuarioTitle_password}" required="true" requiredMessage="#{myBundle.CreateUsuarioRequiredMessage_password}">
+                                <p:ajax event="blur" listener="#{usersController.EncriptaPassword(null)}" update="password"/>
+                            </p:password>
+                            <p:tooltip for="password" value="#{usersController.getComponentMessages('password', myBundle.CreateUsuarioHelpText_password)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="Grupo" for="grupo" />
+                        <h:panelGroup>
+                             <p:selectOneMenu id="grupo" value="#{usersController.selected.grupo}">
+                        
+                            <f:selectItem itemLabel="Administrador" itemValue="ADMIN" />
+                            <f:selectItem itemLabel="Consejo" itemValue="CONSEJO" />
+                            
+                            
+                        </p:selectOneMenu>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usersController.saveNew}" value="#{myBundle.Save}" update="display,:UsersListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsersCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('UsersCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

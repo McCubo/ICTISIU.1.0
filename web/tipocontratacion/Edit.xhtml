@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TipocontratacionEditDlg" widgetVar="TipocontratacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTipocontratacionTitle}" closeOnEscape="true">
+
+            <h:form id="TipocontratacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tipocontratacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTipocontratacionLabel_idtipocontra}" for="idtipocontra" />
+                        <h:panelGroup>
+                            <h:outputText id="idtipocontra" value="#{tipocontratacionController.selected.idtipocontra}" />
+                            <p:tooltip for="idtipocontra" value="#{tipocontratacionController.getComponentMessages('idtipocontra', myBundle.EditTipocontratacionHelpText_idtipocontra)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTipocontratacionLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{tipocontratacionController.selected.nombre}" title="#{myBundle.EditTipocontratacionTitle_nombre}" size="100" maxlength="100"/>
+                            <p:tooltip for="nombre" value="#{tipocontratacionController.getComponentMessages('nombre', myBundle.EditTipocontratacionHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTipocontratacionLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{tipocontratacionController.selected.descripcion}" title="#{myBundle.EditTipocontratacionTitle_descripcion}" size="200" maxlength="200"/>
+                            <p:tooltip for="descripcion" value="#{tipocontratacionController.getComponentMessages('descripcion', myBundle.EditTipocontratacionHelpText_descripcion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipocontratacionController.save}" value="#{myBundle.Save}" update="display,:TipocontratacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipocontratacionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('TipocontratacionEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

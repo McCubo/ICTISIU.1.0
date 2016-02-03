@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DetallemedicionListForm">
+
+        <p:panel header="#{myBundle.ListDetallemedicionTitle}">
+            <p:contextMenu id="DetallemedicionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('DetallemedicionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('DetallemedicionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('DetallemedicionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('DetallemedicionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.DetallemedicionMenuItem_idmedicion}" icon="ui-icon-search"  actionListener="#{detallemedicionController.prepareIdmedicion}" update=":MedicionViewForm" oncomplete="PF('MedicionViewDialog').show()" disabled="#{empty detallemedicionController.selected.idmedicion}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{detallemedicionController.items}"
+                         var="item"
+                         rowKey="#{item.iddetallemed}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{detallemedicionController.selected}">
+
+                <p:ajax event="rowSelect"   update=":DetallemedicionListForm:createButton :DetallemedicionListForm:viewButton :DetallemedicionListForm:editButton :DetallemedicionListForm:deleteButton :DetallemedicionListForm:DetallemedicionDataTableContextMenu" listener="#{detallemedicionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":DetallemedicionListForm:createButton :DetallemedicionListForm:viewButton :DetallemedicionListForm:editButton :DetallemedicionListForm:deleteButton :DetallemedicionListForm:DetallemedicionDataTableContextMenu" listener="#{detallemedicionController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DetallemedicionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.iddetallemed}" filterBy="#{item.iddetallemed}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetallemedicionTitle_iddetallemed}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.iddetallemed}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.isbn}" filterBy="#{item.isbn}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetallemedicionTitle_isbn}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.isbn}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.detalles}" filterBy="#{item.detalles}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetallemedicionTitle_detalles}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.detalles}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idmedicion.nombre}" filterBy="#{item.idmedicion.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetallemedicionTitle_idmedicion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idmedicion.nombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{detallemedicionController.prepareCreate}" update=":DetallemedicionCreateForm" oncomplete="PF('DetallemedicionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":DetallemedicionViewForm" oncomplete="PF('DetallemedicionViewDialog').show()" disabled="#{empty detallemedicionController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DetallemedicionEditForm" oncomplete="PF('DetallemedicionEditDialog').show()" disabled="#{empty detallemedicionController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{detallemedicionController.delete}" update=":growl,datalist" disabled="#{empty detallemedicionController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

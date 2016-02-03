@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UsersEditDlg" widgetVar="UsersEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditUsersTitle}" closeOnEscape="true">
+
+            <h:form id="UsersEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{usersController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditUsersLabel_username}" for="username" />
+                        <h:panelGroup>
+                            <h:outputText id="username" value="#{usersController.selected.username}" />
+                            <p:tooltip for="username" value="#{usersController.getComponentMessages('username', myBundle.EditUsersHelpText_username)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsersLabel_password}" for="password" />
+                        <h:panelGroup>
+                            <p:inputText id="password" value="#{usersController.selected.password}" title="#{myBundle.EditUsersTitle_password}" size="255" maxlength="255"/>
+                            <p:tooltip for="password" value="#{usersController.getComponentMessages('password', myBundle.EditUsersHelpText_password)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsersLabel_grupo}" for="grupo" />
+                        <h:panelGroup>
+                            <p:inputText id="grupo" value="#{usersController.selected.grupo}" title="#{myBundle.EditUsersTitle_grupo}" required="true" requiredMessage="#{myBundle.EditUsersRequiredMessage_grupo}" size="255" maxlength="255"/>
+                            <p:tooltip for="grupo" value="#{usersController.getComponentMessages('grupo', myBundle.EditUsersHelpText_grupo)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usersController.save}" value="#{myBundle.Save}" update="display,:UsersListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsersEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('UsersEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

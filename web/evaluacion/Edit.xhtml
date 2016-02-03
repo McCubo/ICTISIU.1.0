@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EvaluacionEditDlg" widgetVar="EvaluacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEvaluacionTitle}" closeOnEscape="true">
+
+            <h:form id="EvaluacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{evaluacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditEvaluacionLabel_ideva}" for="ideva" />
+                        <h:panelGroup>
+                            <h:outputText id="ideva" value="#{evaluacionController.selected.ideva}" />
+                            <p:tooltip for="ideva" value="#{evaluacionController.getComponentMessages('ideva', myBundle.EditEvaluacionHelpText_ideva)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditEvaluacionLabel_puntaje}" for="puntaje" />
+                        <h:panelGroup>
+                            <p:inputText id="puntaje" value="#{evaluacionController.selected.puntaje}" title="#{myBundle.EditEvaluacionTitle_puntaje}" required="true" requiredMessage="#{myBundle.EditEvaluacionRequiredMessage_puntaje}"/>
+                            <p:tooltip for="puntaje" value="#{evaluacionController.getComponentMessages('puntaje', myBundle.EditEvaluacionHelpText_puntaje)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditEvaluacionLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" locale="es" navigator="true" pattern="dd/MM/yyyy" value="#{evaluacionController.selected.fecha}" title="#{myBundle.EditEvaluacionTitle_fecha}" required="true" requiredMessage="#{myBundle.EditEvaluacionRequiredMessage_fecha}" showOn="button"/>
+                            <p:tooltip for="fecha" value="#{evaluacionController.getComponentMessages('fecha', myBundle.EditEvaluacionHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditEvaluacionLabel_idcal}" for="idcal" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idcal" value="#{evaluacionController.selected.idcal}" required="true" requiredMessage="#{myBundle.EditEvaluacionRequiredMessage_idcal}" converter="calificacionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{calificacionController.items}"
+                                               var="idcalItem"
+                                               itemValue="#{idcalItem}"
+                                               itemLabel="#{idcalItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idcal" value="#{evaluacionController.getComponentMessages('idcal', myBundle.EditEvaluacionHelpText_idcal)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditEvaluacionLabel_idinvestigador}" for="idinvestigador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idinvestigador" value="#{evaluacionController.selected.idinvestigador}" required="true" requiredMessage="#{myBundle.EditEvaluacionRequiredMessage_idinvestigador}" converter="investigadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{investigadorController.items}"
+                                               var="idinvestigadorItem"
+                                               itemValue="#{idinvestigadorItem}"
+                                               itemLabel="#{idinvestigadorItem.nombres.toString()} #{idinvestigadorItem.apellidos.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idinvestigador" value="#{evaluacionController.getComponentMessages('idinvestigador', myBundle.EditEvaluacionHelpText_idinvestigador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{evaluacionController.save}" value="#{myBundle.Save}" update="display,:EvaluacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EvaluacionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('EvaluacionEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

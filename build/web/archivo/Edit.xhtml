@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ArchivoEditDlg" widgetVar="ArchivoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditArchivoTitle}" closeOnEscape="true">
+
+            <h:form id="ArchivoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{archivoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditArchivoLabel_idarchivo}" for="idarchivo" />
+                        <h:panelGroup>
+                            <h:outputText id="idarchivo" value="#{archivoController.selected.idarchivo}" />
+                            <p:tooltip for="idarchivo" value="#{archivoController.getComponentMessages('idarchivo', myBundle.EditArchivoHelpText_idarchivo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditArchivoLabel_ruta}" for="ruta" />
+                        <h:panelGroup>
+                            <p:inputText id="ruta" value="#{archivoController.selected.ruta}" title="#{myBundle.EditArchivoTitle_ruta}" required="true" requiredMessage="#{myBundle.EditArchivoRequiredMessage_ruta}" size="100" maxlength="100"/>
+                            <p:tooltip for="ruta" value="#{archivoController.getComponentMessages('ruta', myBundle.EditArchivoHelpText_ruta)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditArchivoLabel_idevidencia}" for="idevidencia" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idevidencia" value="#{archivoController.selected.idevidencia}" required="true" requiredMessage="#{myBundle.EditArchivoRequiredMessage_idevidencia}" converter="evidenciaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{evidenciaController.items}"
+                                               var="idevidenciaItem"
+                                               itemValue="#{idevidenciaItem}"
+                                               itemLabel="#{idevidenciaItem.idevidencia.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idevidencia" value="#{archivoController.getComponentMessages('idevidencia', myBundle.EditArchivoHelpText_idevidencia)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{archivoController.save}" value="#{myBundle.Save}" update="display,:ArchivoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ArchivoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('ArchivoEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

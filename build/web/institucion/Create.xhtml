@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InstitucionCreateDlg" widgetVar="InstitucionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateInstitucionTitle}" closeOnEscape="true">
+
+            <h:form id="InstitucionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{institucionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateInstitucionLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputText id="nombre" value="#{institucionController.selected.nombre}" title="#{myBundle.CreateInstitucionTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateInstitucionRequiredMessage_nombre}" size="150" maxlength="150"/>
+                            <p:tooltip for="nombre" value="#{institucionController.getComponentMessages('nombre', myBundle.CreateInstitucionHelpText_nombre)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInstitucionLabel_idinsticat}" for="idinsticat" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idinsticat" value="#{institucionController.selected.idinsticat}" required="true" requiredMessage="#{myBundle.CreateInstitucionRequiredMessage_idinsticat}" converter="institucioncatConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{institucioncatController.items}"
+                                               var="idinsticatItem"
+                                               itemValue="#{idinsticatItem}"
+                                               itemLabel="#{idinsticatItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idinsticat" value="#{institucionController.getComponentMessages('idinsticat', myBundle.CreateInstitucionHelpText_idinsticat)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{institucionController.saveNew}" value="#{myBundle.Save}" update="display,:InstitucionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InstitucionCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('InstitucionCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
