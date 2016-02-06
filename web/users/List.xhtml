@@ -12,7 +12,7 @@
             <p:contextMenu id="UsersDataTableContextMenu" for="datalist">  
                 <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('UsersListForm:createButton').click();" icon="ui-icon-plus"/>
                 <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('UsersListForm:viewButton').click();" icon="ui-icon-search"/>
-                
+                <p:menuitem value="#{myBundle.EditUsuarioTitle}" onclick="document.getElementById('UsersListForm:editButton').click();" icon="ui-icon-pencil"/>
                 <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('UsersListForm:deleteButton').click();" icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="datalist"
@@ -28,36 +28,29 @@
                 <p:ajax event="rowSelect"   update=":UsersListForm:createButton :UsersListForm:viewButton :UsersListForm:deleteButton :UsersListForm:UsersDataTableContextMenu"/>
                 <p:ajax event="rowUnselect" update=":UsersListForm:createButton :UsersListForm:viewButton :UsersListForm:deleteButton :UsersListForm:UsersDataTableContextMenu"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('UsersListForm:viewButton').click();"/>
-
                 <p:column sortBy="#{item.username}" filterBy="#{item.username}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListUsersTitle_username}"/>
                     </f:facet>
                     <h:outputText value="#{item.username}"/>
                 </p:column>
-
-
                 <p:column sortBy="#{item.password}" filterBy="#{item.password}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListUsersTitle_password}"/>
                     </f:facet>
                     <h:outputText value="#{item.password}"/>
                 </p:column>
-
-
                 <p:column sortBy="#{item.grupo}" filterBy="#{item.grupo}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListUsersTitle_grupo}"/>
                     </f:facet>
                     <h:outputText value="#{item.grupo}"/>
                 </p:column>
-
-
             </p:dataTable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{usersController.prepareCreate}" update=":UsersCreateForm" oncomplete="PF('UsersCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":UsersViewForm" oncomplete="PF('UsersViewDialog').show()" disabled="#{empty usersController.selected}"/>
-            
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{usersController.prepareCreate}" update=":UsersCreateForm" oncomplete="PF('UsersCreateDialog').show()"/>
+            <p:commandButton id="viewButton" style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":UsersViewForm" oncomplete="PF('UsersViewDialog').show()" disabled="#{empty usersController.selected}"/>
+            <p:commandButton id="editButton" style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.EditUsuarioTitle}" update=":UsersEditForm" oncomplete="PF('UsersEditDialog').show()"/>
             <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{usersController.delete}" update=":growl,datalist" disabled="#{empty usersController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>

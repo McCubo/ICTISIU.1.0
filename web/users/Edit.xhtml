@@ -8,28 +8,32 @@
 
     <ui:composition>
         <p:dialog id="UsersEditDlg" widgetVar="UsersEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditUsersTitle}" closeOnEscape="true">
-
             <h:form id="UsersEditForm">
-
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{usersController.selected != null}">
-
-
-                        <h:outputLabel value="#{myBundle.EditUsersLabel_username}" for="username" />
+                        <h:outputLabel value="#{myBundle.ViewUsersLabel_username}" for="username" />
                         <h:panelGroup>
                             <h:outputText id="username" value="#{usersController.selected.username}" />
                             <p:tooltip for="username" value="#{usersController.getComponentMessages('username', myBundle.EditUsersHelpText_username)}"/>
                         </h:panelGroup>
-
-                        <p:outputLabel value="#{myBundle.EditUsersLabel_password}" for="password" />
+                        <p:outputLabel value="#{myBundle.ViewUsersLabel_password}" for="password" />
                         <h:panelGroup>
-                            <p:inputText id="password" value="#{usersController.selected.password}" title="#{myBundle.EditUsersTitle_password}" size="255" maxlength="255"/>
+                            <p:password id="password" size="55" maxlength="100" redisplay="true"  value="#{usersController.selected.password}" title="#{myBundle.CreateUsuarioTitle_password}" required="true" requiredMessage="#{myBundle.CreateUsuarioRequiredMessage_password}">
+                                <p:ajax event="blur" listener="#{usersController.EncriptaPassword(null)}" update="password"/>
+                            </p:password>
+                            <!--
+                            <p:inputText id="password" value="" title="#{myBundle.EditUsersTitle_password}" size="55" maxlength="255"/>
+                            -->
                             <p:tooltip for="password" value="#{usersController.getComponentMessages('password', myBundle.EditUsersHelpText_password)}"/>
                         </h:panelGroup>
-
-                        <p:outputLabel value="#{myBundle.EditUsersLabel_grupo}" for="grupo" />
+                        <p:outputLabel value="#{myBundle.ViewUsersLabel_grupo}" for="grupo" />
                         <h:panelGroup>
-                            <p:inputText id="grupo" value="#{usersController.selected.grupo}" title="#{myBundle.EditUsersTitle_grupo}" required="true" requiredMessage="#{myBundle.EditUsersRequiredMessage_grupo}" size="255" maxlength="255"/>
+                            <p:selectOneMenu id="grupo" value="#{usersController.selected.grupo}">
+                                <f:selectItem itemLabel="Administrador" itemValue="ADMIN" />
+                                <f:selectItem itemLabel="Consejo" itemValue="CONSEJO" />
+                            </p:selectOneMenu>
+                            <!-- <p:inputText id="grupo" value="#{usersController.selected.grupo}" title="#{myBundle.EditUsersTitle_grupo}" required="true" requiredMessage="#{myBundle.EditUsersRequiredMessage_grupo}" size="55" maxlength="255"/>
+                            -->
                             <p:tooltip for="grupo" value="#{usersController.getComponentMessages('grupo', myBundle.EditUsersHelpText_grupo)}"/>
                         </h:panelGroup>
                     </p:panelGrid>
@@ -38,11 +42,7 @@
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="PF('UsersEditDialog').hide()"/>
                 </h:panelGroup>
-
             </h:form>
-
         </p:dialog>
-
     </ui:composition>
-
 </html>
